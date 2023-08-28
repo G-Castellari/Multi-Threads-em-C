@@ -18,7 +18,7 @@ int main ()
 
     do
     {
-        printf("---------------- MENU -----------------\n");
+        printf("\n---------------- MENU -----------------\n");
         printf("------------ [0] Sair -----------------\n");
         printf("------------ [1] Tabuada --------------\n");
         printf("------------ [2] Fatorial -------------\n");
@@ -53,28 +53,28 @@ int main ()
         case 3:
             printf("Digite um valor: ");
             scanf("%d", &n3);
-            
+
             pthread_create(&f3, NULL, parOuImpar, (void *)(&n3));
-            
+
             pthread_join(f3, NULL);
             break;
         case 4:
             printf("Digite um numero: ");
             scanf("%d", &n4);
-            
+
             pthread_create(&f4, NULL, funcaoDeDobro, (void *)(&n4));
-            
+
             pthread_join(f4, NULL);
             break;
         case 5:
-            printf("Digite as 4 notas: ");
+            printf("Digite um numero: ");
             scanf("%d", &n5);
-            
+
             pthread_create(&f5, NULL, numerosVizinhos, (void *)(&n5));
-            
+
             pthread_join(f5, NULL);
         default:
-            printf("Opção indisponivel!!");
+            printf("Opção indisponivel!!\n");
     }
     }
     while(cod != 0);
@@ -84,7 +84,7 @@ void * tabuada (void *num)
 {
     int valor = *(int *)(num);
     int i ;
-    printf ("\nThread 1 executando...\n");
+    printf ("\nO numero da thread é %d\n", pthread_self() );
     for (i = 0; i <= 10; i++)
     {
         printf("Tabuada do %d * %d = %d\n", valor, i, valor * i);
@@ -98,7 +98,7 @@ void * fatorial (void *num)
     int fatorial;
     int aux = *(int *)(num);
     int soma = 0;
-    printf("\nThread 2 executando...\n");
+    printf ("\nO numero da thread é: %d\n", pthread_self() );
     for(fatorial = 1; number > 1; number--)
     {
         fatorial *= number;
@@ -109,6 +109,7 @@ void * fatorial (void *num)
 void * parOuImpar (void *num)
 {
    int number = *(int *)(num);
+   printf ("\nO numero da thread é %d\n", pthread_self() );
    if(number % 2 == 0){
        printf("\nO numero %d é Par\n", number);
    }
@@ -121,12 +122,13 @@ void * parOuImpar (void *num)
 void * funcaoDeDobro (void *num)
 {
     int number = *(int *)(num);
+    printf ("\nO numero da thread é %d\n", pthread_self() );
     printf("\nO dobro de %d é %d\n", number, number*2);
 }
-    
+
 void * numerosVizinhos (void *num)
 {
     int n1 = *(int *)(num);
-    
+    printf ("\nO numero da thread é %d\n", pthread_self() );
     printf("\nVizinho da esquera [%d] %d [%d] Vizinho da direita\n", n1 - 1, n1, n1 +1);
 }
